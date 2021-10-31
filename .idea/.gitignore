@@ -1,0 +1,8 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../../../../../:\Users\HP\Desktop\ENSET\S5_ENSET\spring\Tps_Code\TP_Bonnes pratiques et challenges architectures micro-services\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
