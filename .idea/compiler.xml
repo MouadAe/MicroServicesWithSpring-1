@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="discovery-service" />
         <module name="gateway" />
+        <module name="authentification-service" />
       </profile>
       <profile name="Annotation profile for customer-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -24,6 +25,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="authentification-service" target="1.8" />
       <module name="billing-service" target="1.8" />
       <module name="customer-service" target="1.8" />
       <module name="discovery-service" target="1.8" />
@@ -32,6 +34,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="authentification-service" options="-parameters" />
       <module name="billing-service" options="-parameters" />
       <module name="customer-service" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
