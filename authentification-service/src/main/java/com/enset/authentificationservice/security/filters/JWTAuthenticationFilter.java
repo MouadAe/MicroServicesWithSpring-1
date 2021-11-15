@@ -2,6 +2,7 @@ package com.enset.authentificationservice.security.filters;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.enset.authentificationservice.security.JWTUtil;
 import com.enset.authentificationservice.security.entitis.AppUser;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.AllArgsConstructor;
@@ -40,11 +41,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         User authenticatedUser= (User) authResult.getPrincipal();
-        Algorithm algorithm = Algorithm.HMAC256("mySecretKey");
+        Algorithm algorithm = Algorithm.HMAC256(JWTUtil.SECRET);
         String jwtAccessToken= JWT
                 .create()
                 .withSubject(authenticatedUser.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+2*60*1000))
+                .withExpiresAt(new Date(System.currentTimeMillis()+ JWTUtil.EXPIRE_ACCESS_TOKEN))
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim(
                         "roles",
@@ -57,10 +58,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String jwtRefreshToken= JWT
                 .create()
                 .withSubject(authenticatedUser.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+10*24*3600*1000))
+                .withExpiresAt(new Date(System.currentTimeMillis()+JWTUtil.EXPIRE_REFRESH_TOKEN))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
-
         Map<String,String> accessToken=new HashMap<>();
         accessToken.put("Access_Token",jwtAccessToken);
         accessToken.put("Refresh_Token",jwtRefreshToken);
